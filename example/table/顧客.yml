@@ -1,0 +1,67 @@
+id:          m_customer
+name:        顧客
+category:    master
+description: 
+
+fields:
+  id:
+    name:          ID
+    type:          long
+    autoIncrement: true
+
+  cust_last_name:
+    name:          顧客名（姓）
+    type:          varchar
+    length:        32
+
+  cust_first_name:
+    name:          顧客名（名）
+    type:          varchar
+    length:        32
+
+  cust_email:
+    name:          顧客メールアドレス
+    type:          varchar
+    length:        128
+
+  cust_birthday:
+    name:          顧客誕生日
+    type:          date
+
+  effective_flg:
+    name:          有効フラグ
+    type:          boolean
+    note:          true=有効
+
+  version_no:
+    name:          バージョンNo
+    type:          long
+    version:       true
+
+  created_at:
+    name:          作成日時
+    type:          datetime
+
+  created_by:
+    name:          作成者
+    type:          varchar
+    length:        100
+
+  updated_at:
+    name:          更新日時
+    type:          datetime
+
+  updated_by:
+    name:          更新者
+    type:          varchar
+    length:        100
+
+primary:        
+  - id
+indexes:
+  - id: uk_customer
+    type: unique
+    columns:
+      - cust_email
+
+

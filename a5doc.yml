@@ -1,0 +1,13 @@
+projectCode: a5doc
+projectName: A5ドキュメントシステム
+
+# テーブル項目名のドメイン辞書チェック
+domainDictionaryCheck: true;
+
+docFinder:
+  - ./README.md
+  - ./docs/**/*.md
+
+tableFinder:
+  - ./example/table/**/*.yml
+

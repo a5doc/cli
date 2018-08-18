@@ -1,0 +1,78 @@
+id:          m_account
+name:        アカウント
+category:    master
+description: |
+  アカウントを管理するテーブル。  
+  テーブルの該当に関する説明をここに記述する。この記述自体がMDで書ける
+  。
+  * 注意事項１
+  * 注意事項２
+  * 注意事項３
+
+fields:
+  id:
+    name:          ID
+    type:          long
+    autoIncrement: true
+
+  login_id:
+    name:          ログインID
+    type:          varchar
+    length:        100
+
+  login_password:
+    name:          ログインパスワード
+    type:          varchar
+    length:        100
+
+  acct_name:
+    name:          アカウント氏名
+    type:          varchar
+    length:        100
+
+  acct_email:
+    name:          アカウントメールアドレス
+    type:          varchar
+    length:        255
+
+  remember_token:
+    name:          アカウントのパスワードリセット用トークン
+    type:          varchar
+    length:        100
+
+  deleted_at:
+    name:          削除日時
+    type:          datetime
+
+  deleted_by:
+    name:          削除者
+    type:          varchar
+    length:        100
+
+  created_at:
+    name:          作成日時
+    type:          datetime
+
+  created_by:
+    name:          作成者
+    type:          varchar
+    length:        100
+
+  updated_at:
+    name:          更新日時
+    type:          datetime
+
+  updated_by:
+    name:          更新者
+    type:          varchar
+    length:        100
+
+primary:        
+  - id
+indexes:
+  - id:   uk_login_id
+    type: unique
+    columns:
+      - login_id
+      - deleted_at
+

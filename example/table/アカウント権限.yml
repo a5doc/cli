@@ -1,0 +1,27 @@
+id:          m_account_authority
+name:        アカウント権限
+category:    master
+description:
+
+fields:
+  account_id:
+    name:          アカウントID
+    type:          long
+
+  authority_name:
+    name:          権限名
+    type:          varchar
+    length:        32
+
+primary:        
+  - account_id
+  - authority_name
+
+indexes:
+
+foreignKeys:
+  fk_dept_company:
+    fk: account_id
+    references:
+      m_account: id
+
