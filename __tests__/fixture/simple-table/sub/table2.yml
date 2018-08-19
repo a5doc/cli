@@ -1,0 +1,12 @@
+id:   table2
+name: テーブル2
+fields:
+  column21:
+    name:          カラム21
+    type:          varchar
+    length:        100
+
+  column22:
+    name:          カラム22
+    type:          varchar
+    length:        100
