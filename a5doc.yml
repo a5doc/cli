@@ -1,13 +1,14 @@
-projectCode: a5doc
-projectName: A5ドキュメントシステム
+projectCode: a5doc-example
+projectName: A5顧客管理システム
 
-# テーブル項目名のドメイン辞書チェック
-domainDictionaryCheck: true;
+# テーブルのカラムについて、テーブル間で同名のカラムについて、
+# 型と桁数が一致していることチェックする
+columnNameConsistencyCheck: true;
 
-docFinder:
-  - ./README.md
-  - ./docs/**/*.md
+table:
+  src:
+    - ./example/.a5doc/table/**/*.yml
+  output:
+    - ./example/docs/設計/画面
 
-tableFinder:
-  - ./example/table/**/*.yml
-
+chapter: ./example/.a5doc/chapter.yml
