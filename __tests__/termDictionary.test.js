@@ -1,59 +1,130 @@
 'use strict';
 
+const a5conf = require('../lib/conf')({
+  table: {
+    src: './__tests__/fixture/simple-table/**/*.yml',
+    output: './.tmp/table-md'
+  }
+});
 const tableManager = require('../lib/tableManager');
 const termDictionary = require('../lib/termDictionary');
 
-test('termDictionary', () => {
-  const tables = tableManager.all();
+test('用語辞書にテーブル定義を追加', () => {
+  const tables = tableManager.readAll();
+  termDictionary.clear();
   termDictionary.addTables(tables);
-  let actual = termDictionary.get({
-    term:'m_customer',
+  expect(termDictionary.get({
+    term:'table1',
     termType:termDictionary.type.TABLE_ID
-  });
-  expect(actual).toEqual({
-    term: 'm_customer',
+  })).toEqual({
+    term: 'table1',
     termType: termDictionary.type.TABLE_ID,
     termCategory: termDictionary.category.TABLE,
     relation: {
-      tableId: 'm_customer',
+      tableId: 'table1',
     },
   });
-  actual = termDictionary.get({
-    term:'顧客',
+  expect(termDictionary.get({
+    term:'テーブル1',
     termType:termDictionary.type.TABLE_NAME
-  });
-  expect(actual).toEqual({
-    term: '顧客',
+  })).toEqual({
+    term: 'テーブル1',
     termType: termDictionary.type.TABLE_NAME,
     termCategory: termDictionary.category.TABLE,
     relation: {
-      tableId: 'm_customer',
+      tableId: 'table1',
     },
   });
-  actual = termDictionary.get({
-    term:'cust_email',
+  expect(termDictionary.get({
+    term:'column1',
     termType:termDictionary.type.COLUMN_ID
-  });
-  expect(actual).toEqual({
-    term: 'cust_email',
+  })).toEqual({
+    term: 'column1',
     termType: termDictionary.type.COLUMN_ID,
     termCategory: termDictionary.category.TABLE,
     relation: {
-      tableId: 'm_customer',
-      columnId: 'cust_email',
+      tableId: 'table1',
+      columnId: 'column1',
     },
   });
-  actual = termDictionary.get({
-    term:'顧客メールアドレス',
+  expect(termDictionary.get({
+    term:'カラム1',
     termType:termDictionary.type.COLUMN_NAME
-  });
-  expect(actual).toEqual({
-    term: '顧客メールアドレス',
+  })).toEqual({
+    term: 'カラム1',
     termType: termDictionary.type.COLUMN_NAME,
     termCategory: termDictionary.category.TABLE,
     relation: {
-      tableId: 'm_customer',
-      columnId: 'cust_email',
+      tableId: 'table1',
+      columnId: 'column1',
     },
   });
+  expect(termDictionary.get({
+    term:'table2',
+    termType:termDictionary.type.TABLE_ID
+  })).not.toBeNull();
+  expect(termDictionary.get({
+    term:'column2',
+    termType:termDictionary.type.COLUMN_ID
+  })).not.toBeNull();
+  expect(termDictionary.get({
+    term:'カラム2',
+    termType:termDictionary.type.COLUMN_NAME
+  })).not.toBeNull();
+  expect(termDictionary.get({
+    term:'column21',
+    termType:termDictionary.type.COLUMN_ID
+  })).not.toBeNull();
+  expect(termDictionary.get({
+    term:'カラム21',
+    termType:termDictionary.type.COLUMN_NAME
+  })).not.toBeNull();
+});
+
+test('テーブル定義の重複定義のチェック', () => {
+  const tables = tableManager.readAll();
+  termDictionary.clear();
+  termDictionary.addTables(tables);
+  expect(() => {
+    termDictionary.addTables({
+      'table1': {
+        id: 'table1',
+        name: 'XXXX',
+        fields: {
+          column1: {
+            name: 'カラムX'
+          }
+        }
+      }
+    });
+  }).toThrow();
+  expect(() => {
+    termDictionary.addTables({
+      'tableXX': {
+        id: 'tableXX',
+        name: 'テーブル1',
+        fields: {
+          column1: {
+            name: 'カラムX'
+          }
+        }
+      }
+    });
+  }).toThrow();
+  expect(() => {
+    termDictionary.addTables({
+      'table100': {
+        id: 'table100',
+        name: 'テーブル100',
+        fields: {
+          column100: {
+            name: 'カラム100'
+          },
+          column101: {
+            name: 'カラム100'
+          }
+        }
+      }
+    });
+  }).toThrow();
 });
