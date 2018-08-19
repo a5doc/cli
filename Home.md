@@ -1,1 +1,2 @@
 aaa
+[example](example/home)
