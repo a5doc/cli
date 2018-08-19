@@ -1,2 +1,2 @@
 aaa
-[example](/example/home.md)
+[example](example/home.md)
