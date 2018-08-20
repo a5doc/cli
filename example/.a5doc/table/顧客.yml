@@ -59,7 +59,7 @@ fields:
 primary:        
   - id
 indexes:
-  - id: uk_customer
+  uk_customer:
     type: unique
     columns:
       - cust_email

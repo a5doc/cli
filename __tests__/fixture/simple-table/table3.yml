@@ -1,0 +1,14 @@
+id:   table3
+name: テーブル3
+fields:
+  id:
+    name:          ID
+    type:          long
+    autoIncrement: true
+    note: |
+      備考1行  
+      備考2行  
+
+primary:
+  - column1
+

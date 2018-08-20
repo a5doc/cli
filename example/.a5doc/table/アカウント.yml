@@ -70,7 +70,7 @@ fields:
 primary:        
   - id
 indexes:
-  - id:   uk_login_id
+  uk_login_id:
     type: unique
     columns:
       - login_id

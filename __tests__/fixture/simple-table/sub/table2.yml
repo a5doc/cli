@@ -1,12 +1,27 @@
 id:   table2
 name: テーブル2
 fields:
+  id:
+    name:          ID
+    type:          long
+    autoIncrement: true
+    note:          備考1行
+
   column21:
     name:          カラム21
     type:          varchar
     length:        100
+    note: |
+      説明（２－１）  
+      説明（２－２）  
 
   column22:
     name:          カラム22
     type:          varchar
     length:        100
+    note: |
+      説明（３－１）  
+      説明（３－２）  
+
+primary:
+  - column1

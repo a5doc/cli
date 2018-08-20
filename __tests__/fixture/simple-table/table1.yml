@@ -1,6 +1,11 @@
 id:   table1
 name: テーブル1
 fields:
+  id:
+    name:          ID
+    type:          long
+    autoIncrement: true
+
   column1:
     name:          カラム1
     type:          varchar
@@ -10,3 +15,28 @@ fields:
     name:          カラム2
     type:          varchar
     length:        100
+    note:          備考1行
+
+  column3:
+    name:          カラム3
+    type:          varchar
+    length:        100
+    note: |
+      備考1行  
+      備考2行  
+
+primary:
+  - column1
+
+indexes:
+  uk_index1:
+    type: unique
+    columns:
+      - column1
+      - column2
+
+  index2:
+    type: index
+    columns:
+      - column2
+
