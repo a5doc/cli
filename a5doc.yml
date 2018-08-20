@@ -8,7 +8,6 @@ columnNameConsistencyCheck: true;
 table:
   src:
     - ./example/.a5doc/table/**/*.yml
-  output:
-    - ./example/docs/設計/画面
+  output: ./example/docs/設計/テーブル定義
 
 chapter: ./example/.a5doc/chapter.yml

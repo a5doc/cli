@@ -32,37 +32,34 @@ test('MDファイルの出力', () => {
   const mdtext = fs.readFileSync(outdir + '/テーブル1.md', 'utf8');
   // ドキュメントヘッダーの確認
   expect(mdtext.split(/\n/)[0])
-    .toMatch(/ドキュメント|テーブルID|テーブル名/);
+    .toMatch(/ドキュメント\|テーブルID\|テーブル名/);
   expect(mdtext.split(/\n/)[2])
-    .toMatch(/テーブル定義|table1    |テーブル1/);
+    .toMatch(/テーブル定義\|table1    \|テーブル1/);
   // カラムの定義表の1行を確認
   expect(mdtext)
-    .toMatch(/カラム1|column1|○|varchar|100   |    |○      |/);
+    .toMatch(/カラム1\|column1\|○\|1 \|varchar\|100   \|    \|○      \|/);
   // autoIncrementの備考反映の確認
   expect(mdtext)
-    .toMatch(/ID     |id     |  |long   |      |    |○      |オートナンバー/);
-  // autoIncrementの備考反映の確認
-  expect(mdtext)
-    .toMatch(/ID     |id     |  |long   |      |    |○      |オートナンバー/);
+    .toMatch(/ID.*|オートナンバー$/);
   // 備考1行の確認
   expect(mdtext)
-    .toMatch(/カラム2|column2|  |varchar|100   |    |○      |備考1行/);
+    .toMatch(/カラム2.*|備考1行$/);
   // 備考2行の確認(脚注に転記されている)
   expect(mdtext)
-    .toMatch(/カラム3|column3|  |varchar|100   |    |○      |\[※1\]\(#columnSpecFootNote1\)/);
+    .toMatch(/カラム3.*|\[※1\]\(#columnSpecFootNote1\)$/);
   expect(mdtext)
     .toMatch(/\*\*※1\*\*\s+備考1行\s+備考2行/m);
   // インデックスの定義表の1行を確認
   expect(mdtext)
-    .toMatch(/1 |uk_index1     |○      |column1<br>column2/);
+    .toMatch(/1 \|uk_index1     \|○      \|column1<br>column2/);
   const mdtext2 = fs.readFileSync(outdir + '/テーブル2.md', 'utf8');
   // autoIncrementのと備考の両方があるときの確認
   expect(mdtext2)
-    .toMatch(/ID     |id     |  |long   |      |    |○      |オートナンバー<br>備考1行/);
+    .toMatch(/ID.*|オートナンバー<br>備考1行/);
   const mdtext3 = fs.readFileSync(outdir + '/テーブル3.md', 'utf8');
   // autoIncrementのと備考の両方があるときの確認
   expect(mdtext3)
-    .toMatch(/ID     |id     |  |long   |      |    |○      |オートナンバー<br>\[※1\]\(#columnSpecFootNote1\)/);
-  expect(mdtext)
+    .toMatch(/ID.*|オートナンバー<br>\[※1\]\(#columnSpecFootNote1\)/);
+  expect(mdtext3)
     .toMatch(/\*\*※1\*\*\s+備考1行\s+備考2行/m);
 });

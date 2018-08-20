@@ -14,6 +14,7 @@
     "eslint-config-google": "^0.3.0",
     "fs-extra": "^7.0.0",
     "jest": "^23.5.0",
+    "minimist": "^1.2.0",
     "moment": "^2.17.1",
     "moment-timezone": "^0.5.13",
     "node-glob": "^1.2.0"
