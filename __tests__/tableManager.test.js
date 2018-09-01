@@ -5,7 +5,7 @@ const fs = require('fs-extra');
 const a5conf = require('../lib/conf')({
   table: {
     src: './__tests__/fixture/simple-table/**/*.yml',
-    output: './.tmp/table-md'
+    tableMdDir: './.tmp/table-md'
   }
 });
 const tableManager = require('../lib/tableManager');
@@ -20,9 +20,9 @@ test('read table yml', () => {
 });
 
 test('MDファイルの出力', () => {
-  fs.removeSync(a5conf.table.output);
+  fs.removeSync(a5conf.table.tableMdDir);
   tableManager.writeMdAll();
-  const outdir = a5conf.table.output;
+  const outdir = a5conf.table.tableMdDir;
   const mdfiles = a5util.findFilesGlob(outdir+'/**/*.md');
   expect(Object.keys(mdfiles).length).toBe(3);
   expect(mdfiles).toContain(outdir + '/テーブル1.md');
