@@ -2,6 +2,9 @@
   "name": "a5doc",
   "license": "ISC",
   "main": "./lib/a5doc.js",
+  "bin": {
+    "a5doc": "./lib/a5doc.js"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/altus5/a5doc.git"
@@ -13,6 +16,8 @@
     "eslint": "^5.3.0",
     "eslint-config-google": "^0.3.0",
     "fs-extra": "^7.0.0",
+    "gitbook-cli": "^2.3.2",
+    "gitbook-plugin-uml": "^1.0.1",
     "jest": "^23.5.0",
     "minimist": "^1.2.0",
     "moment": "^2.17.1",
@@ -24,10 +29,15 @@
   },
   "private": true,
   "scripts": {
-    "build": "gulp",
-    "test": "jest"
+    "a5doc": "node a5doc.js",
+    "test": "jest",
+    "build": "gitbook build",
+    "serve": "gitbook serve",
+    "pdf": "docker-compose -f gitbook/docker-compose.yml run --rm gitbook pdf"
   },
   "eslintConfig": {
     "extends": "google"
+  },
+  "dependencies": {
   }
 }

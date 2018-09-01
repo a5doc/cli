@@ -1,0 +1,15 @@
+{
+  "language": "ja",
+  "plugins": [
+    "uml",
+    "mathjax"
+  ],
+  "pluginsConfig": {
+  },
+  "pdf": {
+    "fontFamily": "sans",
+    "fontSize": 12,
+    "pageNumbers": false
+  },
+  "root": "./example/docs"
+}
