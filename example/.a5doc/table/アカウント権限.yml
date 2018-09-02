@@ -21,7 +21,9 @@ indexes:
 
 foreignKeys:
   fk_dept_company:
-    fk: account_id
+    columns: [account_id]
     references:
-      m_account: id
+      tableId: m_account
+      columns: [id]
+    relationType: 1N:1
 

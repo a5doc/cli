@@ -26,7 +26,7 @@ fields:
       備考2行  
 
 primary:
-  - column1
+  - id
 
 indexes:
   uk_index1:

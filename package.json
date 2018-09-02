@@ -29,7 +29,7 @@
   },
   "private": true,
   "scripts": {
-    "a5doc": "node a5doc.js",
+    "a5doc": "node lib/a5doc.js",
     "test": "jest",
     "build": "gitbook build",
     "serve": "gitbook serve",

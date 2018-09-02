@@ -9,3 +9,39 @@ table:
   src:
     - ./example/.a5doc/table/**/*.yml
   tableMdDir: ./example/docs/設計/テーブル定義
+  erd:
+    - id: ER-001
+      docTitle: ER図（全体）
+      description: システム全体のER図
+      path: ./example/docs/設計/テーブル定義/ER図-全体.md
+      # 表示するテキスト形式
+      # logical=論理名 | physical=物理名 | both=物理名+論理名
+      labelType: logical
+      # 作図するテーブルを指定
+      entityPatterns: 
+        # id=テーブルIDの正規表現
+        # columnType=表示するカラムタイプ
+        # all=全カラムを表示 | no=カラムなし | pk=PKのみ | pk+uk=PKとUKのみ
+        - id: .*
+          columnType: no
+
+    - id: ER-002
+      docTitle: ER図（顧客）
+      description: 顧客を中心にしたER図
+      path: ./example/docs/設計/テーブル定義/ER図-顧客.md
+      labelType: physical
+      entityPatterns: 
+        - id: m_account.*
+          columnType: pk
+        - id: m_customer
+          columnType: all
+
+    - id: ER-003
+      docTitle: ER図（アカウント）
+      description: アカウント
+      path: ./example/docs/設計/テーブル定義/ER図-アカウント.md
+      labelType: both
+      entityPatterns: 
+        - id: m_account.*
+          columnType: all
+

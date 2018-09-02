@@ -24,4 +24,4 @@ fields:
       説明（３－２）  
 
 primary:
-  - column1
+  - id

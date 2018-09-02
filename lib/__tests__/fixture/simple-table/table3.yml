@@ -15,6 +15,35 @@ fields:
       備考1行  
       備考2行  
 
+  table2_id:
+    name:          テーブル2のID
+    type:          long
+
+  column1:
+    name:          カラム1
+    type:          varchar
+    length:        100
+
+  column2:
+    name:          カラム2
+    type:          varchar
+    length:        100
+
 primary:
-  - column1
+  - id
+
+foreignKeys:
+  fk_table2:
+    columns: [table2_id]
+    references:
+      tableId: table2
+      columns: [id]
+    relationType: 0N:1
+
+  fk_table1:
+    columns: [column1, column2]
+    references:
+      tableId: table1
+      columns: [column1, column2]
+    relationType: 01:1
 
