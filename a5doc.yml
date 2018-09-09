@@ -5,6 +5,19 @@ projectName: A5顧客管理システム
 # 型と桁数が一致していることチェックする
 columnNameConsistencyCheck: true;
 
+# ドキュメントのルートディレクトリ
+docroot: ./example/docs
+
+# ドキュメントのスタイル
+## wiki: wikiでドキュメントを参照する用
+## md: 通常のgitリポジトリでドキュメントを参照する用
+## gitbook: gitbook用
+docstyle: wiki
+
+# 目次
+docindex:
+  title: '目次'
+
 table:
   src:
     - ./example/.a5doc/table/**/*.yml
