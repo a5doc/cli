@@ -33,7 +33,7 @@ rootChapter:
         - title: テーブル定義
           src:
             - ./example/docs/設計/テーブル定義/**/*.md
-            - !./example/docs/設計/テーブル定義/**/ER図*.md
+            - '!./example/docs/設計/テーブル定義/**/ER図*.md'
 
 table:
   src:
