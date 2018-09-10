@@ -23,7 +23,7 @@ function outputChapter(chapter, level) {
     });
   }
   if (chapter.subchapters) {
-    Object.values(chapter.subchapters).forEach((subchapter) => {
+    chapter.subchapters.forEach((subchapter) => {
       outputChapter(subchapter, level+1);
     });
   }

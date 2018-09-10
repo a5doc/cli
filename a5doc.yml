@@ -1,5 +1,5 @@
 projectCode: a5doc-example
-projectName: A5顧客管理システム
+projectName: &projectName A5顧客管理システム
 
 # テーブルのカラムについて、テーブル間で同名のカラムについて、
 # 型と桁数が一致していることチェックする
@@ -14,9 +14,26 @@ docroot: ./example/docs
 ## gitbook: gitbook用
 docstyle: wiki
 
-# 目次
+# 対象ドキュメント
 docindex:
-  title: '目次'
+  # ドキュメント名（目次ページのタイトル）
+  title: $projectName
+  # 対象ドキュメント収集モジュール
+  indexer: chapterIndexer
+
+# chapter定義型のドキュメント収集モジュール
+rootChapter:
+  title: Home
+  src: ./example/docs/home.md
+  subchapters:
+    - title: 設計
+      subchapters:
+        - title: ER図
+          src: ./example/docs/設計/テーブル定義/**/ER図*.md
+        - title: テーブル定義
+          src:
+            - ./example/docs/設計/テーブル定義/**/*.md
+            - !./example/docs/設計/テーブル定義/**/ER図*.md
 
 table:
   src:
