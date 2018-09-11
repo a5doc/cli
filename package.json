@@ -36,6 +36,7 @@
     "fs-extra": "^7.0.0",
     "gitbook-cli": "^2.3.2",
     "gitbook-plugin-uml": "^1.0.1",
+    "js-yaml": "^3.12.0",
     "minimist": "^1.2.0",
     "moment": "^2.17.1",
     "moment-timezone": "^0.5.13",
