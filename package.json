@@ -1,6 +1,8 @@
 {
   "name": "a5doc",
+  "private": true,
   "license": "ISC",
+  "version": "0.0.1",
   "main": "./lib/a5doc.js",
   "bin": {
     "a5doc": "./lib/a5doc.js"
@@ -17,7 +19,6 @@
   "engines": {
     "node": ">=0.12"
   },
-  "private": true,
   "scripts": {
     "a5doc": "node lib/a5doc.js",
     "test": "jest",
