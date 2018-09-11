@@ -5,11 +5,20 @@
     "mathjax"
   ],
   "pluginsConfig": {
+    "uml": {
+      "format": "svg",
+      "charset" : "UTF-8",
+      "nailgun": false,
+      "config": "./gitbook/config.txt"
+    }
   },
   "pdf": {
-    "fontFamily": "sans",
+    "fontFamily": "Noto Sans CJK JP",
     "fontSize": 12,
     "pageNumbers": false
   },
-  "root": "./example/docs"
+  "root": "./example/docs",
+  "structure": {
+    "readme": "home.md"
+  }
 }

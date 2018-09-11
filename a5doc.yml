@@ -17,7 +17,7 @@ docstyle: wiki
 # 対象ドキュメント
 docindex:
   # ドキュメント名（目次ページのタイトル）
-  title: $projectName
+  title: *projectName
   # 対象ドキュメント収集モジュール
   indexer: chapterIndexer
 
