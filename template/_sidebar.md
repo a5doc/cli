@@ -1,7 +1,3 @@
-<% if (chapterRoot.title) { -%>
-<%= chapterRoot.title %>
-
-<% } -%>
 <%
 function outputChapter(chapter, level) {
   if (chapter.title && level > 0) {
@@ -18,7 +14,7 @@ function outputChapter(chapter, level) {
     const sp = ' '.repeat(indent * 4);
     chapter.contents.forEach((content) => {
 -%>
-<%- sp + mark %> [<%- content.title %>](<%- content.link %>)  
+<%- sp + mark %> [<%- content.title %>](<%- mdUtil.escapeLink(content.link) %>)  
 <%
     });
   }
