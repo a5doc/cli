@@ -24,16 +24,18 @@ docindex:
 # chapter定義型のドキュメント収集モジュール
 rootChapter:
   title: Home
-  src: ./example/docs/home.md
+  src: home.md
   subchapters:
     - title: 設計
       subchapters:
         - title: ER図
-          src: ./example/docs/設計/テーブル定義/**/ER図*.md
+          basedir: 設計/テーブル定義
+          src: "**/ER図*.md"
         - title: テーブル定義
+          basedir: 設計/テーブル定義
           src:
-            - ./example/docs/設計/テーブル定義/**/*.md
-            - '!./example/docs/設計/テーブル定義/**/ER図*.md'
+            - "**/*.md"
+            - "!**/ER図*.md"
 
 table:
   src:

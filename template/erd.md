@@ -1,8 +1,6 @@
 <%- docHead %>
 
 <% if (erd.description && erd.description != '') {%>
-# 概要
-
 <%- erd.description %>
 <% } %>
 
