@@ -31,11 +31,13 @@ rootChapter:
         - title: ER図
           basedir: 設計/テーブル定義
           src: "**/ER図*.md"
+          collapse: true
         - title: テーブル定義
           basedir: 設計/テーブル定義
           src:
             - "**/*.md"
             - "!**/ER図*.md"
+          collapse: false
 
 table:
   src:

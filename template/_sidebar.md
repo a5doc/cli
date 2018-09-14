@@ -1,11 +1,19 @@
 <%
 function outputChapter(chapter, level) {
+  let collapseStart1 = '';
+  let collapseStart2 = '';
+  let collapseEnd = '';
   if (chapter.title && level > 0) {
     const indent = level - 1;
     const mark = level <= 1 ? '*': '-';
     const sp = ' '.repeat(indent * 4);
+    if (chapter.collapse) {
+      collapseStart1 = '<details><summary>';
+      collapseStart2 = '</summary>\n';
+      collapseEnd = sp + '  </details>';
+    }
 -%>
-<%- sp + mark + ' ' + chapter.title %>  
+<%- sp + mark + ' ' + collapseStart1 + chapter.title + collapseStart2 %>  
 <%
   }
   if (chapter.contents) {
@@ -22,6 +30,11 @@ function outputChapter(chapter, level) {
     chapter.subchapters.forEach((subchapter) => {
       outputChapter(subchapter, level+1);
     });
+  }
+  if (chapter.collapse) {
+-%>
+<%- collapseEnd %>  
+<%
   }
 }
 
