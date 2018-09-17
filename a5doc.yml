@@ -22,22 +22,21 @@ docindex:
   indexer: chapterIndexer
 
 # chapter定義型のドキュメント収集モジュール
-rootChapter:
-  title: Home
-  src: home.md
-  subchapters:
-    - title: 設計
-      subchapters:
-        - title: ER図
-          basedir: 設計/テーブル定義
-          src: "**/ER図*.md"
-          collapse: true
-        - title: テーブル定義
-          basedir: 設計/テーブル定義
-          src:
-            - "**/*.md"
-            - "!**/ER図*.md"
-          collapse: false
+chapters:
+  - title: Home
+    src: home.md
+  - title: 設計
+    chapters:
+      - title: ER図
+        dir: 設計/テーブル定義
+        src: "**/ER図*.md"
+        collapse: true
+      - title: テーブル定義
+        dir: 設計/テーブル定義
+        src:
+          - "**/*.md"
+          - "!**/ER図*.md"
+        collapse: false
 
 table:
   src:

@@ -1,8 +1,6 @@
 # Summary
 
-A5顧客管理システム
-
-* [Home](./home.md)  
+* [Home](home.md)  
 * 設計  
     - ER図  
         - [ER図-アカウント](設計/テーブル定義/ER図-アカウント.md)  

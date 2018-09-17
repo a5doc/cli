@@ -1,35 +1,30 @@
 # Summary
 
-<% if (chapterRoot.title) { -%>
-<%= chapterRoot.title %>
-
-<% } -%>
 <%
 function outputChapter(chapter, level) {
-  if (chapter.title && level > 0) {
-    const indent = level - 1;
-    const mark = level <= 1 ? '*': '-';
-    const sp = ' '.repeat(indent * 4);
+  if (chapter.title) {
+    const bol = mdUtil.listIndent(level);
 -%>
-<%- sp + mark + ' ' + chapter.title %>  
+<%- bol.fisrtIndent + mdUtil.mdLink(chapter.title, chapter.link) %>  
 <%
   }
   if (chapter.contents) {
-    const indent = level === 0 ? 0: level;
-    const mark = level <= 0 ? '*': '-';
-    const sp = ' '.repeat(indent * 4);
+    // 見出し（chapter.title）がないときは、
+    // インデントを見出しと同じにする
+    const bol = mdUtil.listIndent(chapter.title ? (level + 1): level);
     chapter.contents.forEach((content) => {
 -%>
-<%- sp + mark %> [<%- content.title %>](<%- content.link %>)  
+<%- bol.fisrtIndent + mdUtil.mdLink(content.title, content.link) %>  
 <%
     });
   }
-  if (chapter.subchapters) {
-    chapter.subchapters.forEach((subchapter) => {
+  if (chapter.chapters) {
+    chapter.chapters.forEach((subchapter) => {
       outputChapter(subchapter, level+1);
     });
   }
 }
-
-outputChapter(chapterRoot, 0);
+chapters.forEach((chapter) => {
+  outputChapter(chapter, 0);
+});
 -%>
