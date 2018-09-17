@@ -5,7 +5,6 @@ function outputChapter(chapter, level) {
     if (chapter.collapse) {
 -%>
 <%- bol.fisrtIndent %><details><summary><%- chapter.title %></summary>
-
 <%
     } else {
 -%>
