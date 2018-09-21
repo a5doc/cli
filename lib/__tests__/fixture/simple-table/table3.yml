@@ -6,7 +6,7 @@ description: |
 
   空行を挟んでもまだテキストのブロックとして認識される。
 
-fields:
+columns:
   id:
     name:          ID
     type:          long

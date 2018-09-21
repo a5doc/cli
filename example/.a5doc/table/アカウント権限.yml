@@ -3,7 +3,7 @@ name:        アカウント権限
 category:    master
 description:
 
-fields:
+columns:
   account_id:
     name:          アカウントID
     type:          long

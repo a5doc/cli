@@ -3,7 +3,7 @@ name:        顧客
 category:    master
 description: 
 
-fields:
+columns:
   id:
     name:          ID
     type:          long

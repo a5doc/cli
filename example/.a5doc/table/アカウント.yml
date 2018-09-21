@@ -8,7 +8,7 @@ description: |
   * 注意事項２
   * 注意事項３
 
-fields:
+columns:
   id:
     name:          ID
     type:          long

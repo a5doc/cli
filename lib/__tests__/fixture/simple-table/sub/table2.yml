@@ -1,6 +1,6 @@
 id:   table2
 name: テーブル2
-fields:
+columns:
   id:
     name:          ID
     type:          long
