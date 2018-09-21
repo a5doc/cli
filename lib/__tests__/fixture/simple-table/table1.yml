@@ -15,13 +15,13 @@ fields:
     name:          カラム2
     type:          varchar
     length:        100
-    note:          備考1行
+    desc:          備考1行
 
   column3:
     name:          カラム3
     type:          varchar
     length:        100
-    note: |
+    desc: |
       備考1行  
       備考2行  
 

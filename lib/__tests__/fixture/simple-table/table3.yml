@@ -11,7 +11,7 @@ fields:
     name:          ID
     type:          long
     autoIncrement: true
-    note: |
+    desc: |
       備考1行  
       備考2行  
 

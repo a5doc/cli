@@ -12,11 +12,11 @@
 
 <% /* 表外の補足説明 */
 if (columnSpecFootNotes) {
-  columnSpecFootNotes.forEach((note) => {
+  columnSpecFootNotes.forEach((footNote) => {
 -%>
-<a name="<%= note.index %>"></a>
-**<%= note.label %>**  
-<%= note.note %>  
+<a name="<%= footNote.index %>"></a>
+**<%= footNote.label %>**  
+<%= footNote.desc %>  
 <%
   });
 } -%>

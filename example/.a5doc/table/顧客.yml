@@ -31,7 +31,7 @@ fields:
   effective_flg:
     name:          有効フラグ
     type:          boolean
-    note:          true=有効
+    desc:          true=有効
 
   version_no:
     name:          バージョンNo

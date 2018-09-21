@@ -5,13 +5,13 @@ fields:
     name:          ID
     type:          long
     autoIncrement: true
-    note:          備考1行
+    desc:          備考1行
 
   column21:
     name:          カラム21
     type:          varchar
     length:        100
-    note: |
+    desc: |
       説明（２－１）  
       説明（２－２）  
 
@@ -19,7 +19,7 @@ fields:
     name:          カラム22
     type:          varchar
     length:        100
-    note: |
+    desc: |
       説明（３－１）  
       説明（３－２）  
 
