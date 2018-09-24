@@ -6,8 +6,10 @@ function outputChapter(chapter, level) {
 -%>
 <%- bol.fisrtIndent %><details><summary><%- chapter.title %></summary>
 <%
-      if (conf.wikiEngine === 'gitlab') {
-        // gitlabのwikiでdetails/summaryを使うときには、summaryのあとに空行を1行入れないと表示がおかしくなる
+      if (conf.wikiEngine !== 'gitlab') {
+        // githubのwikiやVSCodeでdetails/summaryを使うときには、
+        // </summary>のあとに空行を1行入れないと表示がおかしくなる
+        // 逆にgitlabでは空行を入れるとおかしくなる
 %>
 <%
       }

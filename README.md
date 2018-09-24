@@ -3,65 +3,27 @@ a5doc
 
 MDで仕様書を作成することをサポートするためのツールです。
 
-SphinxやGitBookなど、テキストでドキュメントを管理するツールは、すでに、いくつもありますが、それらのツールは、MDファイルをソースとして、htmlやpdfに変換してドキュメントを作成しますが、対して、a5docは`MDファイルを作成することをサポートする`ツールです。  
+SphinxやGitBookなど、テキストでドキュメントを管理するツールは、すでに、いくつもありますが、それらのツールは、MDファイルをソースとして、htmlやpdfに変換してドキュメントを作成しますが、a5docは`MDファイルを作成することをサポートする`ツールです。  
 
-a5docでは、書いたMDファイルの章立てのナンバリングを更新したり、テーブル定義をMDファイルに出力したり、ER図をPlantUMLでMDファイルに出力したり、MDのテキストファイルを作成、補正するための、nodejsで動くツールです。
+作成されたMDファイルは、githubやgitlabのwikiに、そのままコミットして、wikiで仕様書を参照すること、あるいはテキストエディタで仕様書を読むことを目的にしています。  
 
-作成されたMDファイルは、githubやgitlabのwikiに、そのままコミットして、wikiの機能でドキュメントを参照することを目的としています。  
+a5docは、WEBサーバー機能を持っているわけではなくて、単純にMDファイルの補正と作成をするだけなので、SphinxやGitBookなどの実行になんら影響を与えません。  
+普段は、wikiで仕様書を書いて、HTMLで公開するとかPDFでドキュメントを納品するときなどには、その目的に適したSphinxやGitBookを使うのが、よいと思います。  
 
-GitBookを併用することも、もちろん可能です。
-普段は、wikiで仕様書を書いて、成果物を納品するときに、GitBookでpdfにするといったことも可能です。
-
-このツールでは、yamlで用語を定義したり、MD内から用語を抽出したりしながら、用語を管理して、その用語を使って、MDで書かれた仕様書の校正を行ったり、一部仕様書の自動生成を行います。
-
-具体的には、こんなことをやりたいと思ってます。
-* テーブル定義の作成
+* [はじめに](#install)
+* [目次の作成](#_Sidebar)（_Sidebar.mdとして出力）
+* [テーブル定義の作成](#table)
 * ER図の作成
-* MDで仕様書を書く
+* 文書内のTOCを更新 ・・・・・・・・・・・・・・・未実装
+* MD仕様書から用語の抽出・・・・・・・・・・・・・未実装
 * 用語のスペルチェック（リンク切れチェック）・・・未実装
 * 章のナンバリング・・・・・・・・・・・・・・・・未実装
-* 目次の作成・・・・・・・・・・・・・・・・・・・未実装
 * CRUD表の作成・・・・・・・・・・・・・・・・・・未実装
 * GLOSSARYの作成・・・・・・・・・・・・・・・・・未実装
 
-## テーブル定義の作成
-
-MDでテーブル定義を書いてみるとわかるのだが、表が異常に書きづらいです。  
-excelで書いた方が、よほど生産的なのだけれど、テキストで管理したいので、テーブル定義のMDは自動生成することにして、テーブル定義に必要な情報をyamlで作成します。  
-
-* yamlサンプル  
-    example/.a5doc/table/アカウント.yml
-* 自動生成されたMDの出力サンプル  
-    example/docs/設計/テーブル定義/アカウント.md
-
-リポジトリには、yamlファイルも一緒にコミットしておきます。
-
-## MD仕様書
-
-仕様書をMDファイルで記述します。  
-機能名や画面名は、MD内から正規表現で抽出します。  
-画面IDや画面名といった、用語として、意味ある項目は、MDの中に埋め込んでおいてください。
-
-例えば、以下のようなMDがあった場合、
-```
-| ドキュメント | 画面ID   | 画面名   |
-|--------------|----------|----------|
-| 画面設計     | ui-login | ログイン |
-
-# 1. 概要
-ログイン認証のための画面。  
-
-入力値から[アカウント][]マスタを検索し、認証できた場合に、ホーム画面に遷移する。
-
-・・・・
-```
-画面IDおよび画面名を抽出する正規表現は次の通りです。
-* 画面ID: `/^\| *画面設計 *\| *(.+?) *\|/`
-* 画面名: `/^\| *画面設計 *\|.+\|? *(.+?) *\|/`
-
-## 使い方
-
-```
+<a name="install"></a>
+## はじめに
+```bash
 # インストール
 npm install -g a5doc
 
@@ -69,43 +31,110 @@ npm install -g a5doc
 a5doc init
 ```
 
-a5doc.yml というファイルが作成されているので、必要な情報を設定します。
-a5doc.ymlの設定方法は、[詳細](#a5doc-yml)を参照してください。  
+<a name="_Sidebar"></a>
+## 目次の作成
 
-### テーブル定義の作成
+githubやgitlabのwikiでは、_Sidebar.mdに記述された内容が、サイドバーに表示される仕様となっています。
+この_Sidebar.mdの作成をツールが行います。
 
-テーブル定義をyamlで作成して、以下のコマンドで、仕様書を作成します。
-```
-a5doc table
-```
-これで、ymlで作成したテーブル定義の内容を、MDファイルに変換して、出力します。  
-MDのテーブルのフォーマット処理も施されているので、MDのままでテキストエディタで参照しても、十分に読み取れます。
+見出しの作成方法は、2つあります。
+* シンプルにディレクトリ名を目次にする
+* 見出しの作成を細かく指定するchapterIndexer
 
-### ER図の作成
+### シンプルにディレクトリ名を目次にする
 
-MDファイルにPlantUMLを埋め込んで、ER図を出力します。
-```
-a5doc erd
+特に設定は不要です。
+```bash
+a5doc sidebar
 ```
 
+### 見出しの作成を細かく指定するchapterIndexer
 
-## 詳細
+見出しの順番を制御したり、目次に表示する内容を制御したい場合は、文書ファイルを走査方法を、指定することができます。
 
-<a name="a5doc-yml"></a>
-### a5doc.yml
-a5docツールの設定
+(Step.1)
+
+a5doc.ymlに目次作成方法を設定します。  
+```yml
+# ドキュメントのルートディレクトリ
+docroot: ./example/docs
+# サイドバー作成
+sidebar:
+  # 対象文書の走査モジュール
+  indexer: chapterIndexer
+
+# chapterIndexerの走査方法の設定
+chapters:
+  - title: Home
+    src: home.md
+  - title: 設計
+    chapters:
+      - title: ER図
+        dir: 設計/テーブル定義
+        src: "**/ER図*.md"
+        collapse: true
+      - title: テーブル定義
+        dir: 設計/テーブル定義
+        src:
+          - "**/*.md"
+          - "!**/ER図*.md"
+        collapse: false
 ```
-projectCode: a5doc-example
-projectName: A5顧客管理システム
 
-# テーブルのカラムについて、テーブル間で同名のカラムについて、
-# 型と桁数が一致していることチェックする
-columnNameConsistencyCheck: true;
+(Step.2)
 
+a5doc.ymlに設定を追加したら、以下のコマンドで生成します。
+
+```bash
+a5doc sidebar
+```
+
+上記のa5doc.ymlで生成した場合の実行結果は、[./example/docs/_sidebar.md](./example/docs/_sidebar.md)です。
+
+<a name="table"></a>
+## テーブル定義の作成
+
+MDでテーブル定義を書いてみるとわかるのだが、表が異常に書きづらいです。  
+excelで書いた方が、よほど生産的なのだけれど、テキストで管理したいので、テーブル定義のMDは自動生成することにして、テーブル定義に必要な情報をyamlで作成します。  
+MDのテーブルのフォーマット処理も施されているので、テキストエディタでMDのまま見ても十分に読み取れます。  
+リポジトリには、yamlファイルも一緒にコミットしておきます。
+
+(Step.1)
+
+a5doc.ymlにテーブル定義の作成方法を設定します。  
+```yml
 table:
   src:
     - ./example/.a5doc/table/**/*.yml
   tableMdDir: ./example/docs/設計/テーブル定義
+```
+
+(Step.2)
+
+ymlでの定義例  
+[example/.a5doc/table/アカウント.yml](example/.a5doc/table/アカウント.yml) 
+
+(Step.3)
+
+以下のコマンドで、テーブル定義のMDを作成します。  
+```
+a5doc table
+```
+
+自動生成されたMDの出力サンプルは、[example/docs/設計/テーブル定義/アカウント.md](example/docs/設計/テーブル定義/アカウント.md)にあります。
+
+<a name="erd"></a>
+## ER図の作成
+
+PlantUMLでER図を作成します。  
+テーブル定義のymlの中で、FKの定義を書いておくと、それを読み取って、ER図のMDファイルを作成します。  
+テーブル数が多すぎると、PlantUMLがうまくレイアウトしてくれないこともあるので、いくつかのエリアに分けて、ER図が作成できるようにしています。
+
+(Step.1)
+
+a5doc.ymlにER図の作成方法を設定します。  
+```yml
+table:
   erd:
     - id: ER-001
       docTitle: ER図（全体）
@@ -122,43 +151,33 @@ table:
         - id: .*
           columnType: no
 
+    - id: ER-002
+      docTitle: ER図（顧客）
+      description: 顧客を中心にしたER図
+      path: ./example/docs/設計/テーブル定義/ER図-顧客.md
+      labelType: physical
+      entityPatterns: 
+        - id: m_account.*
+          columnType: pk
+        - id: m_customer
+          columnType: all
+
+    - id: ER-003
+      docTitle: ER図（アカウント）
+      description: アカウント
+      path: ./example/docs/設計/テーブル定義/ER図-アカウント.md
+      labelType: both
+      entityPatterns: 
+        - id: m_account.*
+          columnType: all
 ```
 
-### 用語辞書仕様
+(Step.2)
 
-GLOSSARYや目次を作成するために、使う用語辞書の仕様です。  
-用語辞書は、外部定義されるものではなくて、内部的に、こんな仕様で管理していますということを、説明しています。  
-
-用語辞書として管理する対象は、テーブル定義や機能名、画面名などを想定しています。  
+以下のコマンドで、テーブル定義のMDを作成します。  
 ```
-{
-  term: null,
-  termType: null,
-  termCategory: null,
-  relation: {
-    tableId: null,
-    columnId: null,
-  }
-}
+a5doc erd
 ```
-* term  
-    用語
-* termType  
-    用語タイプ  
-    - type.TABLE_ID ‥‥‥ テーブル物理名
-    - type.TABLE_NAME ‥‥‥ テーブル論理名
-    - type.COLUMN_ID ‥‥‥ カラム物理名
-    - type.COLUMN_NAME ‥‥‥ カラム論理名
-    - type.UI_ID ‥‥‥ 画面ID
-    - type.UI_NAME ‥‥‥ 画面名
-    - type.UI_ITEM_ID ‥‥‥ 画面項目ID [^1](#fn1)
-    - type.UI_ITEM_LABEL ‥‥‥ 画面項目ラベル [^1](#fn1)
-* termCategory  
-    用語カテゴリー
-    - category.TABLE ‥‥‥ テーブル
-    - category.UI ‥‥‥ 画面
 
-<a name="fn1"></a>
-[^1]
-画面項目は、項目ラベルと一致することが多いが、必ずしも一致するとは限らないので、一意に識別するIDが必要です。
+自動生成されたMDの出力サンプルは、[example/docs/設計/テーブル定義/ER図-全体.md](example/docs/設計/テーブル定義/ER図-全体.md)、[ER図-顧客.md](example/docs/設計/テーブル定義/ER図-顧客.md)、[ER図-アカウント.md](example/docs/設計/テーブル定義/ER図-アカウント.md)を参照してください。
 
