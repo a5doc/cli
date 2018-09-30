@@ -81,3 +81,10 @@ table:
         - id: m_account.*
           columnType: all
 
+index:
+  path: ./example/docs/設計.md
+  embedPattern:
+    - "**/ER図*.md"
+  targetDocTitle:
+    - "**/ER図*.md"
+

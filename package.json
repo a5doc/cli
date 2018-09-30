@@ -1,6 +1,5 @@
 {
   "name": "a5doc",
-  "private": true,
   "license": "MIT",
   "version": "0.0.1",
   "main": "./lib/a5doc.js",
