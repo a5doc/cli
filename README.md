@@ -13,13 +13,13 @@ a5docは、WEBサーバー機能を持っているわけではなくて、単純
 * [はじめに](#install)
 * [目次の作成](#_Sidebar)（_Sidebar.mdとして出力）
 * [テーブル定義の作成](#table)
-* ER図の作成
+* [ER図の作成](#erd)
 * 文書内のTOCを更新 ・・・・・・・・・・・・・・・未実装
 * MD仕様書から用語の抽出・・・・・・・・・・・・・未実装
+* GLOSSARYの作成・・・・・・・・・・・・・・・・・未実装
 * 用語のスペルチェック（リンク切れチェック）・・・未実装
 * 章のナンバリング・・・・・・・・・・・・・・・・未実装
 * CRUD表の作成・・・・・・・・・・・・・・・・・・未実装
-* GLOSSARYの作成・・・・・・・・・・・・・・・・・未実装
 
 <a name="install"></a>
 ## はじめに
@@ -95,9 +95,9 @@ a5doc sidebar
 ## テーブル定義の作成
 
 MDでテーブル定義を書いてみるとわかるのだが、表が異常に書きづらいです。  
-excelで書いた方が、よほど生産的なのだけれど、テキストで管理したいので、テーブル定義のMDは自動生成することにして、テーブル定義に必要な情報をyamlで作成します。  
+excelで書いた方が、よほど生産的なのだけれど、テキストで管理したいので、テーブル定義のMDは自動生成することにして、テーブル定義に必要な情報をymlで作成します。  
 MDのテーブルのフォーマット処理も施されているので、テキストエディタでMDのまま見ても十分に読み取れます。  
-リポジトリには、yamlファイルも一緒にコミットしておきます。
+リポジトリには、ymlファイルも一緒にコミットしておきます。
 
 (Step.1)
 
@@ -105,14 +105,101 @@ a5doc.ymlにテーブル定義の作成方法を設定します。
 ```yml
 table:
   src:
-    - ./example/.a5doc/table/**/*.yml
-  tableMdDir: ./example/docs/設計/テーブル定義
+    - ./example/.a5doc/table/**/*.yml           # (1) 
+  tableMdDir: ./example/docs/設計/テーブル定義  # (2) 
 ```
+* (1) ymlで書いたファイルを指定。複数指定可能。
+* (2) 出力先のディレクトリ
 
 (Step.2)
 
-ymlでの定義例  
-[example/.a5doc/table/アカウント.yml](example/.a5doc/table/アカウント.yml) 
+ymlでテーブルの仕様を記述します。
+
+例
+```yml
+id:          m_account      # (1)
+name:        アカウント     # (2)
+category:    master         # (3)
+description: |              # (4)
+  アカウントを管理するテーブル。  
+  テーブルの該当に関する説明をここに記述する。この記述自体がMDで書ける。
+  * 注意事項１
+  * 注意事項２
+  * 注意事項３
+
+columns:                    # (5)
+  id:                       # (5-1)
+    name:          ID       # (5-2)
+    type:          long     # (5-3)
+    autoIncrement: true     # (5-4)
+
+  login_id:
+    name:          ログインID
+    type:          varchar
+    length:        100
+
+  account_name:
+    name:          名前
+    type:          varchar
+    length:        32
+    notNull:       false     # (5-5)
+
+  company_id:
+    name:          会社ID
+    type:          long
+
+  deleted_at:
+    name:          削除日時
+    type:          datetime
+
+primary:                     # (6)        
+  - id
+
+indexes:                     # (7)
+  uk_login_id:               # (7-1)
+    type: unique             # (7-2)
+    columns:                 # (7-3)
+      - login_id
+      - deleted_at
+
+foreignKeys:                 # (8)
+  fk_dept_company:           # (8-1)
+    columns: [company_id]    # (8-2)
+    references:              # (8-3)
+      tableId: m_company     # (8-3-1)
+      columns: [id]          # (8-3-2)
+    relationType: 1N:1       # (8-4)
+
+```
+
+* (1) テーブル名（物理名）
+* (2) テーブル名（論理名）
+* (3) カテゴリ
+* (4) 概要（MD記法で記入）
+* (5) カラムの仕様
+    * (5-1) カラム名（物理名）
+    * (5-2) カラム名（論理名）
+    * (5-3) 型
+    * (5-4) 長さ
+    * (5-5) NOT NULL制約 (false=NULL可。デフォルト=true)
+* (6) プライマリーキー
+* (7) インデックス
+    * (7-1) インデックス名
+    * (7-2) インデックスのタイプ（uniqueが指定可能。デフォルト=非unique）
+    * (7-3) カラム名
+* (8) 外部キー
+    * (8-1) 外部キー名
+    * (8-2) カラム名
+    * (8-3) 参照先
+        * (8-3-1) テーブル名
+        * (8-3-2) カラム名
+    * (8-4) 関係  
+        以下のような書き方が出来ます。左右を逆にしても大丈夫です。
+        * 1:1  ……… 1 対 1
+        * 1:01 ……… 1 対 0 or 1
+        * 1:N  ……… 1 対 多
+        * 1:0N ……… 1 対 0 or 多
+        * 1:1N ……… 1 対 1 or 多
 
 (Step.3)
 
@@ -126,7 +213,7 @@ a5doc table
 <a name="erd"></a>
 ## ER図の作成
 
-PlantUMLでER図を作成します。  
+PlantUMLで記述されたER図を作成します。  
 テーブル定義のymlの中で、FKの定義を書いておくと、それを読み取って、ER図のMDファイルを作成します。  
 テーブル数が多すぎると、PlantUMLがうまくレイアウトしてくれないこともあるので、いくつかのエリアに分けて、ER図が作成できるようにしています。
 
