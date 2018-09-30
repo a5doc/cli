@@ -14,6 +14,7 @@
 if (columnSpecFootNotes) {
   columnSpecFootNotes.forEach((footNote) => {
 -%>
+
 <a name="<%= footNote.index %>"></a>
 **<%= footNote.label %>**  
 <%= footNote.desc %>  
