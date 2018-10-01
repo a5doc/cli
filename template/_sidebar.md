@@ -36,7 +36,9 @@ function outputChapter(chapter, level) {
   }
   if (chapter.title && chapter.collapse) {
     const bol = mdUtil.listIndent(level);
+    // </details>の前には空行を入れないといけない
 -%>
+
 <%- bol.secondIndent %></details>
 <%
   }
