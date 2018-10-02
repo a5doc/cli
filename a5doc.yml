@@ -13,9 +13,6 @@ docroot: ./example/docs
 ## md: 通常のgitリポジトリでドキュメントを参照する用
 ## gitbook: gitbook用
 docstyle: wiki
-# wikiのエンジン（ほんの少し違う）
-## github | gitlab
-wikiEngine: github
 
 # 対象ドキュメント
 docindex:

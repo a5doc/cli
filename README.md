@@ -89,7 +89,7 @@ a5doc.ymlに設定を追加したら、以下のコマンドで生成します�
 a5doc sidebar
 ```
 
-上記のa5doc.ymlで生成した場合の実行結果は、[./example/docs/_sidebar.md](./example/docs/_sidebar.md)です。
+上記のa5doc.ymlで生成した場合の実行結果は、[./example/docs/_Sidebar.md](./example/docs/_Sidebar.md)です。
 
 <a name="table"></a>
 ## テーブル定義の作成

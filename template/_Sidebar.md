@@ -5,14 +5,10 @@ function outputChapter(chapter, level) {
     if (chapter.collapse) {
 -%>
 <%- bol.fisrtIndent %><details><summary><%- chapter.title %></summary>
+
 <%
-      if (conf.wikiEngine !== 'gitlab') {
-        // githubのwikiやVSCodeでdetails/summaryを使うときには、
-        // </summary>のあとに空行を1行入れないと表示がおかしくなる
-        // 逆にgitlabでは空行を入れるとおかしくなる
-%>
-<%
-      }
+      // details/summaryを使うときに、</summary>のあとに
+      // 空行を1行入れないと表示がおかしくなる
     } else {
 -%>
 <%- bol.fisrtIndent + mdUtil.mdLink(chapter.title, chapter.link) %>  
@@ -36,7 +32,7 @@ function outputChapter(chapter, level) {
   }
   if (chapter.title && chapter.collapse) {
     const bol = mdUtil.listIndent(level);
-    // </details>の前には空行を入れないといけない
+    // </details>の前にも空行を入れる（入れなくても問題はないのだが）
 -%>
 
 <%- bol.secondIndent %></details>
