@@ -11,11 +11,10 @@ docroot: ./example/docs
 # ドキュメントのスタイル
 ## wiki: wikiでドキュメントを参照する用
 ## md: 通常のgitリポジトリでドキュメントを参照する用
-## gitbook: gitbook用
 docstyle: wiki
 
-# 対象ドキュメント
-docindex:
+# _Sidebar作成
+sidebar:
   # ドキュメント名（目次ページのタイトル）
   title: *projectName
   # 対象ドキュメント収集モジュール
