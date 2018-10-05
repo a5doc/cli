@@ -102,7 +102,7 @@ a5doc.ymlに設定を追加したら、以下のコマンドで生成します�
 a5doc sidebar
 ```
 
-上記のa5doc.ymlで生成した場合の実行結果は、[./example/docs/_Sidebar.md](./example/docs/_Sidebar.md)です。
+上記のa5doc.ymlで生成した場合の実行結果のサンプルは、[./example/docs/_Sidebar.md](./example/docs/_Sidebar.md)です。
 
 <a name="table"></a>
 ## テーブル定義の作成
@@ -156,6 +156,9 @@ columns:                    # (5)
     type:          varchar
     length:        32
     notNull:       false     # (5-5)
+    desc: |
+      アカウント名が登録されていないときには、
+      ログインIDをアカウント名として使用する
 
   company_id:
     name:          会社ID
@@ -228,7 +231,7 @@ a5doc table
 
 PlantUMLで記述されたER図を作成します。  
 テーブル定義のymlの中で、FKの定義を書いておくと、それを読み取って、ER図のMDファイルを作成します。  
-テーブル数が多すぎると、PlantUMLがうまくレイアウトしてくれないこともあるので、いくつかのエリアに分けて、ER図が作成できるようにしています。
+テーブル数が多すぎると、PlantUMLがうまくレイアウトしてくれないこともあるので、いくつかのエリアに分けて、ER図が作成できるようにするとよいと思われます。
 
 (Step.1)
 
@@ -264,7 +267,7 @@ table:
 
     - id: ER-003
       docTitle: ER図（アカウント）
-      description: アカウント
+      description: アカウント周辺のER図
       path: ./example/docs/設計/テーブル定義/ER図-アカウント.md
       labelType: both
       entityPatterns: 
