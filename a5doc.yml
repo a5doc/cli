@@ -36,6 +36,11 @@ chapters:
           - "**/*.md"
           - "!**/ER図*.md"
         collapse: false
+      - title: APIインターフェース
+        dir: 設計/API
+        src:
+          - "**/*.md"
+        collapse: false
 
 table:
   src:
@@ -77,3 +82,13 @@ table:
         - id: m_account.*
           columnType: all
 
+swagger:
+  src:
+    - 設計/API/**/*.yml
+    - "!設計/API/swagger.yml"
+    - "!設計/API/common.yml"
+  dst: 設計/API
+  common: 設計/API/common.yml
+  merge: 
+    - 設計/API/swagger.yml
+    - 設計/API/swagger.json
