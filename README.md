@@ -8,12 +8,13 @@ SphinxやGitBookなど、テキストでドキュメントを管理するツー�
 作成されたMDファイルは、githubやgitlabのwikiに、そのままコミットして、wikiで仕様書を参照すること、あるいはテキストエディタで仕様書を読むことを目的にしています。  
 
 a5docは、WEBサーバー機能を持っているわけではなくて、単純にMDファイルの補正と作成をするだけなので、SphinxやGitBookなどの実行になんら影響を与えません。  
-普段は、wikiで仕様書を書いて、HTMLで公開するとかPDFでドキュメントを納品するときに、その目的に適したSphinxやGitBookを使ういった、併用が良いと思います。  
+普段は、wikiで仕様書を書いて、HTMLで公開するとかPDFでドキュメントを納品するときに、その目的に適したSphinxやGitBookを使うといった、併用が良いと思います。  
 
 * [はじめに](#install)
 * [目次の作成](#_Sidebar)（_Sidebar.mdとして出力）
 * [テーブル定義の作成](#table)
 * [ER図の作成](#erd)
+* [Swagger.ymlからAPIインターフェース仕様のMDを作成](#swagger)
 * 文書内のTOCを更新 ・・・・・・・・・・・・・・・未実装
 * MD仕様書から用語の抽出・・・・・・・・・・・・・未実装
 * GLOSSARYの作成・・・・・・・・・・・・・・・・・未実装
@@ -23,15 +24,43 @@ a5docは、WEBサーバー機能を持っているわけではなくて、単純
 
 <a name="install"></a>
 ## はじめに
+
+Node.jsが使える状態を前提としています。
+
+### a5docをグローバルにインストールする場合
 ```bash
 # インストール
-npm install a5doc
+npm install -g a5doc
 
 # 初期設定
 a5doc init
 ```
 初期設定を実行すると、カレントディレクトリに、 `a5doc.yml` が作成されます。  
 a5docの設定は、このファイルで行います。
+
+### a5docをローカルにインストールする場合
+
+a5docのインストール
+```bash
+npm install --save a5doc
+```
+
+package.jsonにscriptを追加
+```json
+{
+  ・・・
+  "scripts": {
+    "a5doc": "a5doc"
+  },
+  ・・・
+}
+```
+
+初期設定を実行
+```bash
+npm run a5doc init
+```
+`a5doc.yml` が作成されます。  
 
 <a name="_Sidebar"></a>
 ## 目次の作成
@@ -231,7 +260,7 @@ a5doc table
 
 PlantUMLで記述されたER図を作成します。  
 テーブル定義のymlの中で、FKの定義を書いておくと、それを読み取って、ER図のMDファイルを作成します。  
-テーブル数が多すぎると、PlantUMLがうまくレイアウトしてくれないこともあるので、いくつかのエリアに分けて、ER図が作成できるようにするとよいと思われます。
+テーブル数が多すぎると、PlantUMLがうまくレイアウトしてくれないこともあるので、いくつかのグループに分けて、ER図を作成するとよいと思います。
 
 (Step.1)
 
@@ -284,3 +313,50 @@ a5doc erd
 
 自動生成されたMDの出力サンプルは、[example/docs/設計/テーブル定義/ER図-全体.md](example/docs/設計/テーブル定義/ER図-全体.md)、[ER図-顧客.md](example/docs/設計/テーブル定義/ER図-顧客.md)、[ER図-アカウント.md](example/docs/設計/テーブル定義/ER図-アカウント.md)を参照してください。
 
+<a name="swagger"></a>
+## Swagger.ymlからAPIインターフェース仕様のMDを作成
+
+APIのインターフェース仕様を記述するのも、テーブル定義と同じように、ymlで書いてMDに変換します。  
+この場合のymlの書式は、Swagger Specで、MDへの変換は、[swagger-markdown](https://www.npmjs.com/package/swagger-markdown) を使います。  
+
+* swagger.ymlの分割とマージ  
+    swagger.ymlは1つのファイルに記述することになっていますが、APIの数が多くなってくると編集しづらいので、ymlを分割して記述できるようになっています。  
+
+    例えば、ユーザーデータに関係したAPIは、`ユーザー.yml`に書いて、注文処理に関するAPIは、`注文.yml`と書いておくと、MDも`ユーザー.md`と`注文.md`の2つが作成されます。MDとして閲覧するときにも、自分好みに整理することができます。  
+
+    そして、単純なマージ処理でしかありませんが、分割されたymlを1つのswagger.yml(swagger.json)として出力することも可能です。  
+
+* 共通定義となるcommon.yml  
+    実際に、いくつかのymlを書いてみると、気になるのが、重複した記述です。  
+    VSCodeなどのエディタを使うと、swagger.ymlの構文チェックをしてくれるので、分割されたymlも、それ単独でswagger specとして正しい状態にしておきたいですが、そうすると、複数のymlで重複した定義をすることになります。  
+    この状態を緩和する機能として、common.ymlに共通部分を外だしすることができるようにしています。
+
+(Step.1)
+
+a5doc.ymlにswaggerからのMD作成方法を設定します。  
+```yml
+swagger:
+  src:                         # (1)
+    - 設計/API/**/*.yml
+    - "!設計/API/swagger.yml"
+    - "!設計/API/common.yml"
+  dst: 設計/API                # (2)
+  common: 設計/API/common.yml  # (3)
+  merge:                       # (4)
+    - 設計/API/swagger.yml
+    - 設計/API/swagger.json
+```
+* (1) 分割されたswagger specのymlの検索パターン  
+    同じディレクトリに swagger.yml を出力する場合は、`!`で除外しておく。  
+    同じく、共通定義のcommon.yml も md出力対象ではないので、`!`で除外しておく。
+* (2) mdの出力先ディレクトリ  
+* (3) 共通定義のyml  
+* (4) 1つにマージしたswagger specの出力指定  
+    ymlとjsonの出力指定が可能。
+
+(Step.2)
+
+以下のコマンドで、テーブル定義のMDを作成します。  
+```
+a5doc swagger
+```
