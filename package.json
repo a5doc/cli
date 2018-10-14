@@ -23,7 +23,7 @@
     "test": "jest",
     "build": "gitbook build",
     "serve": "gitbook serve",
-    "pdf": "docker-compose -f gitbook/docker-compose.yml run --rm gitbook pdf"
+    "pdf": "docker-compose -f .gitbook/docker-compose.yml run --rm gitbook build && docker-compose -f .gitbook/docker-compose.yml run --rm gitbook pdf"
   },
   "eslintConfig": {
     "extends": "google"
