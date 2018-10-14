@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  gitbook:
+    image: a5doc/gitbook
+    volumes:
+      - ..:/docs
+      - gitbook_node_modules:/docs/.gitbook/node_modules
+    working_dir: /docs/.gitbook
+    ports:
+      - 4000:4000
+
+volumes:
+  gitbook_node_modules:
+    driver: local

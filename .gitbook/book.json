@@ -1,0 +1,42 @@
+{
+  "title": "a5doc 設計書サンプル",
+  "author": "株式会社 Altus-Five",
+  "language": "ja",
+  "plugins": [
+    "uml",
+    "mathjax",
+    "autocover"
+  ],
+  "pluginsConfig": {
+    "uml": {
+      "format": "svg",
+      "charset" : "UTF-8",
+      "nailgun": false,
+      "config": "config.txt"
+    },
+    "autocover": {
+      "font": {
+          "size": null,
+          "family": "Noto Sans CJK JP",
+          "color": "#000"
+      },
+      "size": {
+          "w": 1800,
+          "h": 2360
+      },
+      "background": {
+          "color": "#fff"
+      },
+      "template": "./cover.svg"
+  }
+},
+"pdf": {
+    "fontFamily": "Noto Sans CJK JP",
+    "fontSize": 9,
+    "paperSize": "a4"
+  },
+  "root": "../example/docs",
+  "structure": {
+    "readme": "home.md"
+  }
+}

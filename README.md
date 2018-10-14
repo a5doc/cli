@@ -15,6 +15,7 @@ a5docは、WEBサーバー機能を持っているわけではなくて、単純
 * [テーブル定義の作成](#table)
 * [ER図の作成](#erd)
 * [Swagger.ymlからAPIインターフェース仕様のMDを作成](#swagger)
+* [PDFで出力](#pdf)
 * 文書内のTOCを更新 ・・・・・・・・・・・・・・・未実装
 * MD仕様書から用語の抽出・・・・・・・・・・・・・未実装
 * GLOSSARYの作成・・・・・・・・・・・・・・・・・未実装
@@ -360,3 +361,27 @@ swagger:
 ```
 a5doc swagger
 ```
+
+<a name="pdf"></a>
+## PDFを出力
+
+GitBookの機能を使って、PDFを出力します。  
+
+(Step.1)
+
+以下のコマンドで、gitbook用の初期設定および目次ページを作成します。  
+```
+a5doc gitbook
+```
+`.gitbook` フォルダの中に、gitbookを実行するための最小構成の設定ファイルが作成されます。  
+`.gitbook/book.json`を開いて、 title と author を変更してください。
+
+以下のコマンドで、PDFを出力します。  
+```
+npm run pdf
+```
+`.gitbook/book.pdf` にPDFが作成ています。
+
+2回目以降のPDF出力は、目次の更新が必要ない場合は、 `npm run pdf` だけの実行で大丈夫です。  
+目次の更新をする場合は、 `a5doc gitbook` を実行してください。（book.jsonは上書きされません）
+
