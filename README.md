@@ -366,6 +366,7 @@ a5doc swagger
 ## PDFを出力
 
 GitBookの機能を使って、PDFを出力します。  
+gitbookの実行は、dockerコンテナで実行していますので、あらかじめ、docker-composeが実行できる環境を準備してください。
 
 (Step.1)
 
