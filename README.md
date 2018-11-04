@@ -366,9 +366,27 @@ a5doc swagger
 ## PDFを出力
 
 GitBookの機能を使って、PDFを出力します。  
-gitbookの実行は、dockerコンテナで実行していますので、あらかじめ、docker-composeが実行できる環境を準備してください。
+gitbookの実行は、dockerコンテナで実行していますので、あらかじめ、docker-composeが実行できる環境を準備してください。  
+wikiを運営していくうちに、設計書では記事も多数含まれるようになります。  
+wikiとしてみるときと、pdfで出力するときの見出し（目次）は別々にしたいこともあるでしょう。
+その場合には、sidebarを作成したときとは、別の chapterIndexer を指定することができます。
 
 (Step.1)
+
+PDF専用の目次を設定します。
+```
+# PDF作成
+gitbook:
+  indexer: chapterIndexer
+  $chaptersRef: pdfChapters
+
+pdfChapters:
+  - title: 設計
+    dir: 設計
+    src: "**/*.md"
+```
+
+(Step.2)
 
 以下のコマンドで、gitbook用の初期設定および目次ページを作成します。  
 ```
@@ -376,6 +394,8 @@ a5doc gitbook
 ```
 `.gitbook` フォルダの中に、gitbookを実行するための最小構成の設定ファイルが作成されます。  
 `.gitbook/book.json`を開いて、 title と author を変更してください。
+
+(Step.3)
 
 以下のコマンドで、PDFを出力します。  
 ```

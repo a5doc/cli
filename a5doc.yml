@@ -42,6 +42,16 @@ chapters:
           - "**/*.md"
         collapse: false
 
+# PDF作成
+gitbook:
+  indexer: chapterIndexer
+  $chaptersRef: pdfChapters
+
+pdfChapters:
+  - title: 設計
+    dir: 設計
+    src: "**/*.md"
+
 table:
   src:
     - ./example/.a5doc/table/**/*.yml
