@@ -406,3 +406,150 @@ npm run pdf
 2回目以降のPDF出力は、目次の更新が必要ない場合は、 `npm run pdf` だけの実行で大丈夫です。  
 目次の更新をする場合は、 `a5doc gitbook` を実行してください。（book.jsonは上書きされません）
 
+<a name="pdf-layput"></a>
+## PDFのレイアウトを調整
+
+※PDFのレイアウトを変更する必要がない場合は、読み飛ばして問題ありません。  
+gitbookはテンプレート化されていて、プラグインでテーマを変更することができます。デフォルトのテーマは、こちら<https://github.com/GitbookIO/theme-default>が使われています。  
+他のテーマを探して、npm で install するもよし、あるいは、デフォルトのテーマの _layout をコピーして、そのファイルを編集することでも、調整可能です。ちょっとだけ変更するなら、こっちの方が、良いかもしれません。 
+
+(Step.1)  
+
+デフォルトテーマを持ってきて、ドキュメントのディレクトリにコピーします。
+```bash
+# cloneして、_layoutをコピーします
+mkdir tmp
+cd tmp
+git clone https://github.com/GitbookIO/theme-default.git .
+cp -r _layout ${MY_PROJECT_DOCROOT}
+
+# _layout以外は不要なので削除します
+cd ..
+rm -rf tmp
+
+# PDF作成にしかgitbookを使わない場合は、ebookフォルダ以外は不要なので削除します。
+cd ${MY_PROJECT_DOCROOT}/_layout
+rm -rf website layout.html
+```
+※ ${MY_PROJECT_DOCROOT}は、自分のプロジェクトのドキュメントのルートディレクトリを指しています。  
+
+(Step.2)
+
+目次ページを変更する場合のポイントについて、説明します。  
+修正するファイルは、`_layout/ebook/summary.html`です。  
+例えば、ページ番号を出力しないようにする場合は、以下のとおりです。
+```twig
+{% extends "./page.html" %}
+
+{% block title %}{{ "SUMMARY"|t }}{% endblock %}
+
+{% macro articles(_articles) %}
+    {% for article in _articles %}
+        <li>
+            <!--
+             (ポイント1)
+             ここで style="border: none;" にすると下線が無くなります。
+            -->
+            <span class="inner" style="border: none;">
+                {% if article.path or article.url %}
+                    {% if article.path %}
+                        <a href="{{ article.path|contentURL }}{{ article.anchor }}">{{ article.title }}</a>
+                    {% else %}
+                        <a target="_blank" href="{{ article.url }}">{{ article.title }}</a>
+                    {% endif %}
+                {% else %}
+                    <span>{{ article.title }}</span>
+                {% endif %}
+                <!--
+                 (ポイント2)
+                 if 0 にしてページ番号の出力が実行されないようにします
+                -->
+                {% if 0 %}
+                <span class="page">{{ article.level }}</span>
+                {% endif %}
+            </span>
+            {% if article.articles.length > 0 %}
+            <ol>
+                {{ articles(article.articles) }}
+            </ol>
+            {% endif %}
+        </li>
+    {% endfor %}
+{% endmacro %}
+
+・・・
+
+```
+
+(Step.3)
+
+ヘッダーを変更する場合のポイントについて、説明します。  
+修正するファイルは、`_layout/ebook/pdf_header.html`です。  
+例えば、ページ番号を右端に出力させてみます。  
+gitbookのテンプレートで使える変数については、以下を参照してください。
+<https://toolchain.gitbook.com/templating/variables.html>  
+
+```twig
+{% extends "./page.html" %}
+
+{% block body %}
+<div class="pdf-header">
+    <span>{{ page.title }}</span>
+    <!-- (ポイント) 以下を追加します -->
+    <span style="float: right;">Page {{ page.num }}</span>
+</div>
+{% endblock %}
+```
+
+(Step.4)
+
+フッターを変更する場合のポイントについて、説明します。  
+修正するファイルは、`_layout/ebook/pdf_footer.html`です。  
+例えば、左端に著者を出力させてみます。  
+
+```twig
+{% extends "./page.html" %}
+
+{% block body %}
+<div class="pdf-footer">
+    <!-- (ポイント) 以下を追加します -->
+    <span>{{ config.title }}</span>
+    <span class="footer-pages-count">{{ page.num }}</span>
+</div>
+{% endblock %}
+```
+
+(Step.5)
+
+SUMMARYの書き方について、補足します。  
+page.titleには、SUMMARY.mdに書いたリンクテキストが入っています。  
+例えば、以下のようなリンクが書かれているとします。
+```md
+# Summary
+
+* 設計  
+    - ER図  
+        - [アカウント](設計/テーブル定義/ER図-アカウント.md)  
+```
+この場合、リンクテキストが、"アカウント"なので、`ER図-アカウント.md`の文書の`page.title`には"アカウント"が入ります。  
+ファイル名でも、文書内の最初の見出しでもありません。  
+
+ちなみに、文書内に front-matter を書き込むこともできます。  
+front-matterで定義された変数は、 `page.xxx` で参照することができます。  
+ただし、残念ながらヘッダーとフッターには展開されません。
+
+それから、もう1つ、ハマりそうな事として、リンクテキストを章を跨いで同じ文字列で使ってしまうと、2つ目以降の文書のヘッダーやフッターで2重に出力されてしまいます。（おそらくebookコンバーターのバグだと思います）  
+以下のような場合に、このバグに遭遇します。
+```md
+# Summary
+
+* 設計  
+    - ER図  
+        - [アカウント](設計/テーブル定義/ER図-アカウント.md)  
+    - テーブル定義  
+        - [アカウント](設計/テーブル定義/アカウント.md)  
+```
+ER図とテーブル定義の別々の章に"アカウント"があります。  
+こうなっていると、テーブル定義の方のアカウントのページのヘッダーでpage.titleが使われていると、"アカウントアカウント"と2重に出力されます。  
+今のところ、対応方法は、 "リンクテキストを重複しないようにする" です。
+

@@ -28,9 +28,9 @@
           "color": "#fff"
       },
       "template": "./cover.svg"
-  }
-},
-"pdf": {
+    }
+  },
+  "pdf": {
     "fontFamily": "Noto Sans CJK JP",
     "fontSize": 9,
     "paperSize": "a4"
