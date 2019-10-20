@@ -631,6 +631,9 @@ a5doc toc
 * **desc**  
     true | false が設定できます。デフォルトは true です。  
     true の場合、外部文書に front-matter が設定してあって、 description のプロパティが設定されていた場合には、見出しの次の行に description の内容を出力します。
+* **category**  
+    true | false が設定できます。デフォルトは true です。  
+    true の場合、カテゴリー構造をツリー式に出力します。
 
 ### 外部文書をTOCとして作成
 
