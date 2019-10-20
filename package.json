@@ -1,7 +1,7 @@
 {
   "name": "a5doc",
   "license": "MIT",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "main": "./lib/a5doc.js",
   "bin": {
     "a5doc": "./lib/a5doc.js"
@@ -39,6 +39,7 @@
     "js-beautify": "^1.10.2",
     "js-yaml": "^3.13.1",
     "lodash": "^4.17.15",
+    "lru-cache": "^5.1.1",
     "marked": "^0.5.2",
     "merge": ">=1.2.1",
     "minimist": "^1.2.0",
