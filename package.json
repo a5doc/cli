@@ -1,7 +1,7 @@
 {
   "name": "a5doc",
   "license": "MIT",
-  "version": "0.5.3",
+  "version": "0.6.0",
   "main": "./lib/a5doc.js",
   "bin": {
     "a5doc": "./lib/a5doc.js"
@@ -47,6 +47,7 @@
     "moment-timezone": "^0.5.27",
     "node-glob": "^1.2.0",
     "prettier": "^1.15.3",
+    "string-similarity": "^3.0.0",
     "swagger-markdown": "^1.1.5"
   }
 }

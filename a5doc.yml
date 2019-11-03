@@ -11,7 +11,7 @@ docroot: ./example/docs
 # ドキュメントのスタイル
 ## wiki: wikiでドキュメントを参照する用
 ## md: 通常のgitリポジトリでドキュメントを参照する用
-docstyle: wiki
+docstyle: md
 
 # _Sidebar作成
 sidebar:
