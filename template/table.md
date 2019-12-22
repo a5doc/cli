@@ -27,3 +27,9 @@ if (columnSpecFootNotes) {
 
 <%- indexSpec %>
 <% } -%>
+
+<% if (fkSpec != '') { -%>
+# 外部キー
+
+<%- fkSpec %>
+<% } -%>

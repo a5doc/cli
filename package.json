@@ -1,7 +1,7 @@
 {
   "name": "a5doc",
   "license": "MIT",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "main": "./lib/a5doc.js",
   "bin": {
     "a5doc": "./lib/a5doc.js"
